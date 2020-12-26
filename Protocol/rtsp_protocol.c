@@ -1,14 +1,8 @@
-/*
- * 作者：_JT_
- * 博客：https://blog.csdn.net/weixin_42462202
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
 #include <sys/types.h>
-#include <sys/socket.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
@@ -127,7 +121,7 @@ static int handleCmd_DESCRIBE(char *result, int cseq, char *url)
     sprintf(result, "RTSP/1.0 200 OK\r\nCSeq: %d\r\n"
                     "Content-Base: %s\r\n"
                     "Content-type: application/sdp\r\n"
-                    "Content-length: %d\r\n\r\n"
+                    "Content-length: %ld\r\n\r\n"
                     "%s",
             cseq,
             url,
@@ -210,7 +204,7 @@ static void doClient(int clientSockfd, const char *clientIP, int clientPort,
 
             /* User-Agent */
             bufPtr = getLineFromBuf(bufPtr, line);
-            if (sscanf(line, "User-Agent: %s\r\n", &sUserAgent) != 1)
+            if (sscanf(line, "User-Agent: %s\r\n", sUserAgent) != 1)
             {
                 printf("parse[2] err\n");
                 goto out;
